@@ -1,0 +1,4 @@
+test:
+  adapter: postgresql
+  database: ressit_test
+  username: postgres

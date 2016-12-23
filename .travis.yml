@@ -1,7 +1,9 @@
-before_script:
-      - psql -c "CREATE USER coxjc WITH PASSWORD '';" -U postgres
-      - psql -c "create database ressit_test;" -U postgres
-      - psql -c "alter database ressit_test owner to coxjc;"
 language: ruby
-rvm: 
-    - 2.3.3
+rvm:
+      - "2.3.3"
+before_script:
+  - cp config/database.travis.yml config/database.yml
+  - psql -c 'create database ressit_test;' -U postgres
+script:
+  - RAILS_ENV=test bundle exec rake test
+
