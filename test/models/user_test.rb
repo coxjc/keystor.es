@@ -6,6 +6,7 @@ class UserTest < ActiveSupport::TestCase
   # end
   def setup 
       @user = User.new(:name => "TestingName", :email => "name@domain.net", :password => "password", :password_confirmation => "password")
+      @user_2 = User.new(:name => "TestingName2", :email => "name@domain.com", :password => "password", :password_confirmation => "password")
   end
   
   test "testing test suite" do
@@ -31,6 +32,18 @@ class UserTest < ActiveSupport::TestCase
       @user.password = nil
       @user.password_confirmation = nil
       assert_not @user.valid?
+  end
+
+  test "invalid with mismatched password & password confirmation" do
+      @user.password = "wrongpassword"
+      @user.password_confirmation = "password"
+      assert_not @user.valid?
+  end 
+
+  test "invalid without unique email" do
+      @user_2.email = @user.email
+      @user.save!
+      assert_not @user_2.valid?
   end
 
 end
