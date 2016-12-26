@@ -43,6 +43,10 @@
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
 
+.idea/
+
+ressit.iml
+
 ## File-based project format:
 *.iws
 
