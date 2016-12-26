@@ -10,34 +10,41 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'testing test suite' do
-      assert true
-      assert_not false
+    assert true
+    assert_not false
   end
 
   test 'valid user' do
-      assert @user.valid? 
+    assert @user.valid?
   end
 
   test 'invalid without name' do
-      @user.name = nil
-      assert_not @user.valid? 
+    @user.name = nil
+    assert_not @user.valid?
+    @user.name = ' '
+    assert_not @user.valid?
   end
 
   test 'invalid without email' do
-      @user.email = nil
-      assert_not @user.valid?
-   end
+    @user.email = nil
+    assert_not @user.valid?
+    @user.email = ' '
+    assert_not @user.valid?
+  end
 
   test 'invalid without password & password confirmation' do
-      @user.password = nil
-      @user.password_confirmation = nil
-      assert_not @user.valid?
+    @user.password = nil
+    @user.password_confirmation = nil
+    assert_not @user.valid?
+    @user.password = ' '
+    @user.password_confirmation = ' '
+    assert_not @user.valid?
   end
 
   test 'invalid with mismatched password & password confirmation' do
     @user.password = 'wrongpassword'
     @user.password_confirmation = 'password'
-      assert_not @user.valid?
+    assert_not @user.valid?
   end
 
   test 'invalid w/ password less than 6 characters long' do
@@ -48,9 +55,9 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'invalid without unique email' do
-      @user_2.email = @user.email
-      @user.save!
-      assert_not @user_2.valid?
+    @user_2.email = @user.email
+    @user.save!
+    assert_not @user_2.valid?
   end
 
   test 'name saves as uppercase' do
