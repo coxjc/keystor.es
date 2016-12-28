@@ -1,2 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+user1: 
+    id: 1 
+    name: "Name" 
+    email: "abc@123.com"   
+    password_digest: "$2a$10$F9Ua0AgtunOSM98L5.B1JOj51eoMP3FIZymY7tOxTMd9P/SiT86G."
+user2: 
+    id: 2 
+    name: "Name"
+    email: "abcd@1234.com"
+    password_digest: "$2a$10$F9Ua0AgtunOSM98L5.B1JOj51eoMP3FIZymY7tOxTMd9P/SiT86G."
 
