@@ -1,25 +1,17 @@
-# ressit 
-[![Build Status](https://travis-ci.org/coxjc/ressit.png)](https://travis-ci.org/coxjc/ressit)
+# Ressit
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Introduction
 
-Things you may want to cover:
+The web is littered with pitiful resumé templates. Furthermore, how does one know if his/her resumé meets all the current (and constantly changing) standards of a specific industry? Ressit is the answer. 
 
-* Ruby version
+Ressit is a resumé rating platform that helps users find the best resumés for their applicable industries. A great resumé for a computer programmer differs vastly from a resumé that serves a waitress best. Users come to Ressit to get feedback on resumés, and to find the best templates available. Resumé producers upload for feedback, and resumé template seekers search for the best template available. 
 
-* System dependencies
+Ressit can revolutionize and simplify the hell that is creating an amazing resumé. 
 
-* Configuration
+## Installation
 
-* Database creation
+Ruby 2.3.3
 
-* Database initialization
+Rails 5.0.0
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+PostgreSQL 
