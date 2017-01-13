@@ -4,12 +4,18 @@ class KeystoresController < ApplicationController
   # GET /keystores
   # GET /keystores.json
   def index
-    @keystores = Keystore.all
+    @keystores = current_user.keystores
   end
 
   # GET /keystores/1
   # GET /keystores/1.json
   def show
+    if Keystore.find_by(:id => params[:id]) && Keystore.find_by(:id =>
+                                                                    params[:id]).user_id == current_user.id
+      render :show
+    else
+      redirect_to keystores_path
+    end
   end
 
   # GET /keystores/new
@@ -18,19 +24,17 @@ class KeystoresController < ApplicationController
   end
 
   # GET /keystores/1/edit
-  def edit
-  end
+  # def edit
+  # end
 
   # POST /keystores
   # POST /keystores.json
   def create
     file = params[:keystore][:file]
-    if file.content_type == 'application/octet-stream'
-      url = get_s3_url file.original_filename
-      obj = S3_BUCKET.objects[url]
-      obj.write(file: file, acl: 'private')
-      @keystore = Keystore.new(url: obj.public_url, name: obj.key, user: current_user)
-      respond_to do |format|
+    obj = upload_file file
+    respond_to do |format|
+      if obj
+        @keystore = Keystore.new(url: obj.public_url, name: obj.key, user: current_user)
         if @keystore.save
           format.html { redirect_to @keystore, notice: 'Keystore was
         successfully created.' }
@@ -39,23 +43,10 @@ class KeystoresController < ApplicationController
           format.html { render :new }
           format.json { render json: @keystore.errors, status: :unprocessable_entity }
         end
-      end
-    else
-      redirect_to new_keystore_url
-      flash.now[:danger] = 'Invalid file type'
-    end
-  end
-
-  # PATCH/PUT /keystores/1
-  # PATCH/PUT /keystores/1.json
-  def update
-    respond_to do |format|
-      if @keystore.update(keystore_params)
-        format.html { redirect_to @keystore, notice: 'Keystore was successfully updated.' }
-        format.json { render :show, status: :ok, location: @keystore }
       else
-        format.html { render :edit }
-        format.json { render json: @keystore.errors, status: :unprocessable_entity }
+        format.html { render :new }
+        format.json { render json: 'Improper file type', status:
+            :unprocessable_entity }
       end
     end
   end
@@ -72,10 +63,20 @@ class KeystoresController < ApplicationController
 
   private
 
-  #Used for url of AWS object
+  def upload_file(file)
+    if file.content_type == 'application/octet-stream'
+      url = get_s3_url file.original_filename
+      obj = S3_BUCKET.objects[url]
+      obj.write(file: file, acl: 'private')
+      obj
+    else
+      false
+    end
+  end
+
   def get_s3_url(filename)
     s3_url = "uploads/#{SecureRandom.uuid}/#{filename}"
-    s3_url
+    return s3_url
   end
 
   # Use callbacks to share common setup or constraints between actions.
