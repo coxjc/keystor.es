@@ -31,10 +31,12 @@ class KeystoresController < ApplicationController
   # POST /keystores.json
   def create
     file = params[:keystore][:file]
+    name = params[:keystore][:name]
     obj = upload_file file
     respond_to do |format|
       if obj
-        @keystore = Keystore.new(url: obj.public_url, name: obj.key, user: current_user)
+        @keystore = Keystore.new(url: obj.public_url, name: name, user:
+            current_user)
         if @keystore.save
           format.html { redirect_to @keystore, notice: 'Keystore was
         successfully created.' }
@@ -67,7 +69,7 @@ class KeystoresController < ApplicationController
     if file.content_type == 'application/octet-stream'
       url = get_s3_url file.original_filename
       obj = S3_BUCKET.objects[url]
-      obj.write(file: file, acl: 'private')
+      obj.write(file: file, acl: 'public-read')
       obj
     else
       false
