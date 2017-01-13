@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 
-  has_many :keystores
+  has_many :keystores, dependent: :destroy
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
