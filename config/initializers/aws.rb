@@ -1,5 +1,6 @@
-Aws.config.update({
-                      region: 'us-east-1',
-                      credentials: Aws::Credentials.new(ENV['ACCESS_KEY_ID'], ENV['SECRET_ACCESS_KEY']),
-                  })
-S3_BUCKET = Aws::S3::Resource.new.bucket(ENV['S3_BUCKET_NAME'])
+AWS.config(
+    :access_key_id => ENV['ACCESS_KEY_ID'],
+    :secret_access_key => ENV['SECRET_ACCESS_KEY']
+)
+
+S3_BUCKET = AWS::S3.new.buckets[ENV['S3_BUCKET_NAME']]

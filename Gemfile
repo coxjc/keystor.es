@@ -51,4 +51,4 @@ gem 'pg'
 gem 'rails-controller-testing'
 
 #AWS upload
-gem 'aws-sdk', '~> 2'
+gem 'aws-sdk', '~> 1'
