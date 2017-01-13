@@ -24,18 +24,25 @@ class KeystoresController < ApplicationController
   # POST /keystores
   # POST /keystores.json
   def create
-    url = get_s3_url params[:keystore][:file].original_filename
-    obj = S3_BUCKET.objects[url]
-    obj.write(file: params[:keystore][:file], acl: 'private')
-    @keystore = Keystore.new(url: obj.public_url, name: obj.key, user: current_user)
-    respond_to do |format|
-      if @keystore.save
-        format.html { redirect_to @keystore, notice: 'Keystore was successfully created.' }
-        format.json { render :show, status: :created, location: @keystore }
-      else
-        format.html { render :new }
-        format.json { render json: @keystore.errors, status: :unprocessable_entity }
+    file = params[:keystore][:file]
+    if file.content_type == 'application/octet-stream'
+      url = get_s3_url file.original_filename
+      obj = S3_BUCKET.objects[url]
+      obj.write(file: file, acl: 'private')
+      @keystore = Keystore.new(url: obj.public_url, name: obj.key, user: current_user)
+      respond_to do |format|
+        if @keystore.save
+          format.html { redirect_to @keystore, notice: 'Keystore was
+        successfully created.' }
+          format.json { render :show, status: :created, location: @keystore }
+        else
+          format.html { render :new }
+          format.json { render json: @keystore.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to new_keystore_url
+      flash.now[:danger] = 'Invalid file type'
     end
   end
 
