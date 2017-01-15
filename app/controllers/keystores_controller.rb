@@ -1,4 +1,5 @@
 class KeystoresController < ApplicationController
+  include KeystoresHelper
   before_action :set_keystore, only: [:show, :destroy]
 
   # GET /keystores
@@ -60,6 +61,7 @@ class KeystoresController < ApplicationController
   # DELETE /keystores/1
   # DELETE /keystores/1.json
   def destroy
+    delete_obj @keystore.url
     @keystore.destroy
     respond_to do |format|
       format.html { redirect_to keystores_url, notice: 'Keystore was successfully destroyed.' }
