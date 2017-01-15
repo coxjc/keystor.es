@@ -1,4 +1,4 @@
-<%= form_for(keystore, enctype: 'multipart/form-data') do |f| %>
+<%= form_for(@keystore, enctype: 'multipart/form-data') do |f| %>
     <% if keystore.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(keystore.errors.count, "error") %> prohibited this

@@ -39,14 +39,17 @@ class KeystoresController < ApplicationController
         @keystore = Keystore.new(url: url, name: name, user:
             current_user)
         if @keystore.save
-          format.html { redirect_to @keystore, notice: 'Keystore was
-        successfully created.' }
+          flash.now[:notice] = 'First argument in form cannot contain nil or be
+          empty'
+          format.html { redirect_to @keystore }
           format.json { render :show, status: :created, location: @keystore }
         else
+          flash.now[:danger] = @keystore.errors.full_messages.to_sentence
           format.html { render :new }
           format.json { render json: @keystore.errors, status: :unprocessable_entity }
         end
       else
+        flash.now[:danger] = 'Please ensure your file is a .keystore file.'
         format.html { render :new }
         format.json { render json: 'Improper file type', status:
             :unprocessable_entity }
@@ -72,6 +75,7 @@ class KeystoresController < ApplicationController
       obj.write(file: file, acl: 'private')
       obj
     else
+      @keystore = Keystore.new
       false
     end
   end
