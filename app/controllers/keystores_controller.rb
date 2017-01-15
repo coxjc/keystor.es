@@ -1,5 +1,5 @@
 class KeystoresController < ApplicationController
-  before_action :set_keystore, only: [:show, :edit, :update, :destroy]
+  before_action :set_keystore, only: [:show, :destroy]
 
   # GET /keystores
   # GET /keystores.json
@@ -32,10 +32,11 @@ class KeystoresController < ApplicationController
   def create
     file = params[:keystore][:file]
     name = params[:keystore][:name]
-    obj = upload_file file
+    url = get_s3_url file.original_filename
+    obj = upload_file file, url
     respond_to do |format|
       if obj
-        @keystore = Keystore.new(url: obj.public_url, name: name, user:
+        @keystore = Keystore.new(url: url, name: name, user:
             current_user)
         if @keystore.save
           format.html { redirect_to @keystore, notice: 'Keystore was
@@ -65,11 +66,10 @@ class KeystoresController < ApplicationController
 
   private
 
-  def upload_file(file)
+  def upload_file(file, url)
     if file.content_type == 'application/octet-stream'
-      url = get_s3_url file.original_filename
       obj = S3_BUCKET.objects[url]
-      obj.write(file: file, acl: 'public-read')
+      obj.write(file: file, acl: 'private')
       obj
     else
       false

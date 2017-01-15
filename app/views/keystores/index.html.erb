@@ -14,7 +14,7 @@
   <% @keystores.each do |keystore| %>
       <tr>
         <td><%= keystore.name %></td>
-        <td><%= link_to 'Download', keystore.url %></td>
+        <td><%= link_to 'Download', get_download_url(keystore.url) %></td>
         <td><%= link_to 'Destroy', keystore, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
   <% end %>
