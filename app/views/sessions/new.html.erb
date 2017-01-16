@@ -1,18 +1,24 @@
-<div class="container">
+<div class="jumbotron">
   <h1>Login</h1>
+</div>
 
-  <%= form_for(:session, url: login_path) do |f| %>
+<%= form_for(:session, url: login_path) do |f| %>
 
+    <div class="field form-group">
       <label for="">Email</label>
       <%= f.email_field :email, class: 'form-control' %>
+    </div>
 
+    <div class="field form-group">
       <label for="">Password</label>
       <%= f.password_field :password, class: 'form-control' %>
 
       <%= f.submit 'Log in', class: 'btn btn-primary' %>
+    </div>
 
-  <% end %>
+<% end %>
 
-  <p>New user? <%= link_to 'Sign up!', new_user_path %></p>
+<%= link_to '<button type="button" class="btn btn-primary">Sign Up!</button>'
+                .html_safe,
+            new_user_path %>
 
-</div>

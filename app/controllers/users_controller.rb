@@ -30,7 +30,7 @@ class UsersController < ApplicationController
       if @user.save
         flash[:success] = 'Welcome to Ressit!'
         login @user
-        format.html { redirect_to @user }
+        format.html { redirect_to keystores_path }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }

@@ -12,22 +12,24 @@
         </div>
     <% end %>
 
-    <div class="field">
+    <div class="field form-group">
       <%= f.label :name %>
       <%= f.text_field :name %>
     </div>
 
-    <div class="field">
+    <div class="field form-group">
       <%= f.label :email %>
       <%= f.text_field :email %>
     </div>
 
-    <div class="field">
+    <div class="field form-group">
       <%= f.label :password_digest %>
       <%= f.text_field :password_digest %>
     </div>
 
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+
+    <%= button_tag(type: 'submit', class: 'actions btn btn-primary') do %>
+        <i class="icon-ok icon-white"></i> Save Keystore
+    <% end %>
+
 <% end %>
