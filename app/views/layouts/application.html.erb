@@ -59,6 +59,8 @@
     <div class="alert alert-<%= message_type %>"><%= message %></div>
 <% end %>
 <%= debug(params) if Rails.env.development? %>
-<%= yield %>
+<div class="container">
+  <%= yield %>
+</div>
 </body>
 </html>

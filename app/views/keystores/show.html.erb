@@ -1,14 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Url:</strong>
-  <%= @keystore.url %>
+  <strong>User:</strong>
+  <%= @keystore.user.name %>
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @keystore.user %>
+  <strong>App Name:</strong>
+  <%= @keystore.name %>
 </p>
 
-<%= link_to 'Edit', edit_keystore_path(@keystore) %> |
-<%= link_to 'Back', keystores_path %>

@@ -1,12 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Keystores</h1>
+<div class="jumbotron">
+  <h1>
+    <%= current_user.name %>'s Keystores
+  </h1>
+  <p>
+    Links expire every three minutes due to security precautions.
+  </p>
+</div>
 
-<table>
+
+<table class="table table-striped">
   <thead>
   <tr>
-    <th>Name</th>
-    <th colspan="2"></th>
+    <th scope="row">App Name</th>
+    <th scope="row">Download</th>
+    <th scope="row">Delete</th>
   </tr>
   </thead>
 
@@ -14,8 +23,12 @@
   <% @keystores.each do |keystore| %>
       <tr>
         <td><%= keystore.name %></td>
-        <td><%= link_to 'Download', get_download_url(keystore.url) %></td>
-        <td><%= link_to 'Destroy', keystore, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+        <td>
+          <%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe,
+                      get_download_url(keystore.url) %>
+        </td>
+        <td><%= link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe,
+                        keystore, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
   <% end %>
   </tbody>
@@ -23,4 +36,7 @@
 
 <br>
 
-<%= link_to 'New Keystore', new_keystore_path %>
+<%= link_to '<button type="button" class="btn btn-primary">New
+Keystore</button>'
+                .html_safe, new_keystore_path %>
+

@@ -11,18 +11,18 @@
         </div>
     <% end %>
 
-    <div class="field">
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+    <div class="field form-group">
+      <%= f.label 'App Name' %>
+      <%= f.text_field :name, class: 'form-control' %>
     </div>
 
-    <div class="field">
-      <%= f.label :file %>
-      <%= f.file_field :file %>
+    <div class="field form-group">
+      <%= f.label 'Keystore File' %>
+      <%= f.file_field :file, class: 'form-control-file' %>
     </div>
 
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+    <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+        <i class="icon-ok icon-white"></i> Save Keystore
+    <% end %>
 
 <% end %>

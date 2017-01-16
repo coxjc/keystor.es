@@ -1,5 +1,6 @@
 class KeystoresController < ApplicationController
   include KeystoresHelper
+
   before_action :set_keystore, only: [:show, :destroy]
 
   # GET /keystores
@@ -11,22 +12,13 @@ class KeystoresController < ApplicationController
   # GET /keystores/1
   # GET /keystores/1.json
   def show
-    if Keystore.find_by(:id => params[:id]) && Keystore.find_by(:id =>
-                                                                    params[:id]).user_id == current_user.id
-      render :show
-    else
-      redirect_to keystores_path
-    end
+    render :show
   end
 
   # GET /keystores/new
   def new
     @keystore = Keystore.new
   end
-
-  # GET /keystores/1/edit
-  # def edit
-  # end
 
   # POST /keystores
   # POST /keystores.json
@@ -40,8 +32,6 @@ class KeystoresController < ApplicationController
         @keystore = Keystore.new(url: url, name: name, user:
             current_user)
         if @keystore.save
-          flash.now[:notice] = 'First argument in form cannot contain nil or be
-          empty'
           format.html { redirect_to @keystore }
           format.json { render :show, status: :created, location: @keystore }
         else
@@ -89,7 +79,13 @@ class KeystoresController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_keystore
-    @keystore = Keystore.find(params[:id])
+    if Keystore.find_by(:id => params[:id]) && Keystore.find_by(:id =>
+                                                                    params[:id]).user_id == current_user.id
+      @keystore = Keystore.find(params[:id])
+    else
+      flash.now[:danger] = 'Not authorized'
+      redirect_to keystores_path
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
