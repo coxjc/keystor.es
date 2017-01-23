@@ -28,7 +28,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        flash[:success] = 'Welcome to Ressit!'
+        UserMailer.registration_confirmation(@user).deliver
+        flash[:success] = 'Welcome to Ressit! Please confirm your email
+        address to continue.'
         login @user
         format.html { redirect_to keystores_path }
         format.json { render :show, status: :created, location: @user }
@@ -63,7 +65,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def confirm_email
+    user = User.find_by_confirm_token(params[:id])
+    if user
+      user.email_activate
+      flash.now[:success] = 'Your email has been confirmed. Please log in to
+      continue.'
+      redirect_to login_url
+    else
+      flash.now[:error] = 'Invalid action.'
+      redirect_to root_url
+    end
+  end
+
   private
+
+
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])

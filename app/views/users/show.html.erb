@@ -10,5 +10,11 @@
   <%= @user.email %>
 </p>
 
+<p>
+  <strong><span style="color: <%= @user.email %>" class="glyphicon
+  glyphicon-envelope"></span></strong>
+  <%= @user.email_confirmed? %>
+</p>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
