@@ -71,7 +71,7 @@ class UsersController < ApplicationController
       user.email_activate
       flash.now[:success] = 'Your email has been confirmed. Please log in to
       continue.'
-      redirect_to login_url
+      redirect_to user
     else
       flash.now[:error] = 'Invalid action.'
       redirect_to root_url
