@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20170122004821) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "email_confirmed", default: false
-    t.string "confirm_token"
+    t.string "confirm_token", default: nil
     t.string "reset_digest"
     t.datetime "reset_sent_at"
   end
