@@ -2,13 +2,24 @@
 
 <%= form_for :user, url: '/users' do |f| %>
 
-    Name: <%= f.text_field :name %> <br>
-    Email: <%= f.text_field :email %> <br>
-    Password: <%= f.password_field :password %> <br>
-    Password Confirmation: <%= f.password_field :password_confirmation %> <br>
+    <div class="field form-group">
+      Name: <%= f.text_field :name, class: 'form-control' %> <br>
+    </div>
 
-    <%= f.submit 'Submit' %>
+    <div class="field form-group">
+      Password: <%= f.password_field :password, class: 'form-control' %> <br>
+    </div>
+
+    <div class="field form-group">
+      Password Confirmation: <%= f.password_field :password_confirmation,
+                                                  class: 'form-control' %>
+    </div>
+
+    <div class="field form-group">
+      <%= link_to 'Cancel', current_user, class: 'btn btn-primary', style:
+          'color:white' %>
+      <%= f.submit 'Update!', class: 'btn btn-primary' %>
+    </div>
 <% end %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+

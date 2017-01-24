@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    redirect_to root_url
+    # @users = User.all
   end
 
   # GET /users/1
@@ -30,7 +31,7 @@ class UsersController < ApplicationController
       if @user.save
         UserMailer.registration_confirmation(@user).deliver
         flash[:success] = 'Welcome to Ressit! Please confirm your email
-        address to continue.'
+        address to begin uploading keystores.'
         login @user
         format.html { redirect_to keystores_path }
         format.json { render :show, status: :created, location: @user }
@@ -69,9 +70,9 @@ class UsersController < ApplicationController
     user = User.find_by_confirm_token(params[:id])
     if user
       user.email_activate
-      flash.now[:success] = 'Your email has been confirmed. Please log in to
-      continue.'
-      redirect_to user
+      login user
+      flash[:success] = 'Your email has been confirmed. Welcome!'
+      redirect_to keystores_path
     else
       flash.now[:error] = 'Invalid action.'
       redirect_to root_url

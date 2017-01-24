@@ -2,6 +2,7 @@ class KeystoresController < ApplicationController
   include KeystoresHelper
 
   before_action :set_keystore, only: [:show, :destroy]
+  before_action :validate_is_confirmed, only: [:new, :create]
 
   # GET /keystores
   # GET /keystores.json
@@ -60,6 +61,14 @@ class KeystoresController < ApplicationController
   end
 
   private
+
+  def validate_is_confirmed
+    if !current_user.email_confirmed?
+      flash[:danger] = 'You must confirm your email before uploading
+      keystores.'
+      redirect_to keystores_path
+    end
+  end
 
   def upload_file(file, url)
     if file.content_type == 'application/octet-stream'
