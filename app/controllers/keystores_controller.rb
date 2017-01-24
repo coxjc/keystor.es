@@ -3,6 +3,7 @@ class KeystoresController < ApplicationController
 
   before_action :set_keystore, only: [:show, :destroy]
   before_action :validate_is_confirmed, only: [:new, :create]
+  before_action :validate_membership, only: [:new, :create]
 
   # GET /keystores
   # GET /keystores.json
@@ -66,6 +67,15 @@ class KeystoresController < ApplicationController
     if !current_user.email_confirmed?
       flash[:danger] = 'You must confirm your email before uploading
       keystores.'
+      redirect_to keystores_path
+    end
+  end
+
+
+  def validate_membership
+    if !current_user.has_valid_membership?
+      flash[:danger] = 'Your subscription is not valid! Please update your
+      payment to continue.'
       redirect_to keystores_path
     end
   end

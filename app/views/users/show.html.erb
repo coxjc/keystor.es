@@ -11,6 +11,11 @@
 </h3>
 
 <h3>
+  <strong>Subscription Valid Until:</strong>
+  <%= @user.stripe_end_date %>
+</h3>
+
+<h3>
   Email Confirmed:
   <% if @user.email_confirmed? %>
   <span style="color:green"

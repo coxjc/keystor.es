@@ -37,6 +37,15 @@ class User < ApplicationRecord
     UserMailer.password_reset(self).deliver
   end
 
+  def update_membership(tf)
+    if tf
+      self.stripe_end_date = Date.today + 1.month
+    end
+  end
+
+  def has_valid_membership?
+    stripe_end_date && Date.today <= stripe_end_date
+  end
 
   has_secure_password
 

@@ -16,5 +16,8 @@ Rails.application.routes.draw do
   end
 
   resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :charges
+
+  post 'charges/update_sub'
 
 end
