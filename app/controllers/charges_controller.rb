@@ -1,6 +1,8 @@
 class ChargesController < ApplicationController
   before_action :is_logged_in
 
+  protect_from_forgery :except => [:update_sub]
+
   def new
 
   end

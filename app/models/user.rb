@@ -40,6 +40,7 @@ class User < ApplicationRecord
   def update_membership(tf)
     if tf
       self.stripe_end_date = Date.today + 1.month
+      save!(:validate => false)
     end
   end
 
