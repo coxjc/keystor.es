@@ -7,6 +7,8 @@ require 'active_record/railtie'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+skip_before_action :verify_authenticity_token
+
 module Ressit
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
