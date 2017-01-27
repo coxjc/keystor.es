@@ -27,21 +27,21 @@ class ChargesController < ApplicationController
       #refer event types here https://stripe.com/docs/api#event_types
       case event_json['type']
         when 'invoice.payment_succeeded'
-          User.find_by_stripe_cus_id(event_object.customer)
+          User.find_by_stripe_cus_id(event_object['customer'])
               .update_membership(true)
         when 'invoice.payment_failed'
-          User.find_by_stripe_cus_id(event_object.customer)
+          User.find_by_stripe_cus_id(event_object['customer'])
               .update_membership(false)
         when 'charge.failed'
-          User.find_by_stripe_cus_id(event_object.customer)
+          User.find_by_stripe_cus_id(event_object['customer'])
               .update_membership(false)
         when 'customer.subscription.deleted'
-          User.find_by_stripe_cus_id(event_object.customer)
+          User.find_by_stripe_cus_id(event_object['customer'])
               .update_membership(false)
         when 'customer.subscription.updated'
       end
     rescue Exception => ex
-      render :json => {:status => 422, :error => 'Webhook call failed'}
+      render :json => {:status => 422, :error => 'Webhook failed'}
       return
     end
     render :json => {:status => 200}
