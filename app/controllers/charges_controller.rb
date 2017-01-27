@@ -27,16 +27,16 @@ class ChargesController < ApplicationController
       #refer event types here https://stripe.com/docs/api#event_types
       case event_json['type']
         when 'invoice.payment_succeeded'
-          User.find_by_stripe_cus_id(:stripe_cus_id, event_object.customer)
+          User.find_by_stripe_cus_id(event_object.customer)
               .update_membership(true)
         when 'invoice.payment_failed'
-          User.find_by_stripe_cus_id(:stripe_cus_id, event_object.customer)
+          User.find_by_stripe_cus_id(event_object.customer)
               .update_membership(false)
         when 'charge.failed'
-          User.find_by_stripe_cus_id(:stripe_cus_id, event_object.customer)
+          User.find_by_stripe_cus_id(event_object.customer)
               .update_membership(false)
         when 'customer.subscription.deleted'
-          User.find_by_stripe_cus_id(:stripe_cus_id, event_object.customer)
+          User.find_by_stripe_cus_id(event_object.customer)
               .update_membership(false)
         when 'customer.subscription.updated'
       end
