@@ -30,7 +30,7 @@
       <ul class="nav navbar-nav">
         <% if current_user %>
             <li><%= link_to 'My Keystores', keystores_path %></li>
-            <li><a href="#">Payment Settings</a></li>
+            <li><%= link_to 'Payment Settings', new_charge_path %></li>
         <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
