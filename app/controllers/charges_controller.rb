@@ -1,6 +1,6 @@
 class ChargesController < ApplicationController
   before_action :is_logged_in, :except => :update_sub
-
+  before_action :create, :only => :create
   protect_from_forgery :except => [:update_sub]
 
   def new
@@ -48,6 +48,14 @@ class ChargesController < ApplicationController
   end
 
   private
+
+  def no_valid_payment
+    if !current_user.stripe_end_date || current_user.stripe_end_date < Date.today
+      true
+    else
+      redirect_to root_url
+    end
+  end
 
   def is_logged_in
     if !logged_in?

@@ -1,18 +1,25 @@
-<%= form_tag charges_path do %>
-    <article>
-      <% if flash[:error].present? %>
-          <div id="error_explanation">
-            <p><%= flash[:error] %></p>
-          </div>
-      <% end %>
-      <label class="amount">
-        <span>Amount: $1.49/month</span>
-      </label>
-    </article>
+<% if current_user && current_user.stripe_end_date && current_user
+    .stripe_end_date >= Date.today %>
+    <h1>Your payment is up to date. You will be charged on <%= current_user
+                                                               .stripe_end_date %>
+    </h1>
+<% else %>
+    <%= form_tag charges_path do %>
+        <article>
+          <% if flash[:error].present? %>
+              <div id="error_explanation">
+                <p><%= flash[:error] %></p>
+              </div>
+          <% end %>
+          <label class="amount">
+            <span>Amount: $1.49/month</span>
+          </label>
+        </article>
 
-    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-description="A month's subscription"
-            data-amount="149"
-            data-locale="auto"></script>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                data-description="A month's subscription"
+                data-amount="149"
+                data-locale="auto"></script>
+    <% end %>
 <% end %>
