@@ -1,0 +1,2 @@
+require 'stripe_mock'
+

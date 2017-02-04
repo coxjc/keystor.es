@@ -78,4 +78,27 @@ class UserTest < ActiveSupport::TestCase
     assert @user_2.email = user_2_email
   end
 
+  test 'create reset digest' do
+    @user.create_reset_digest
+    assert_not_nil @user.reset_digest
+    assert_not_nil @user.reset_sent_at
+  end
+
+  test 'password reset valid for two hours max' do
+    @user.create_reset_digest
+    assert_not @user.password_reset_expired?
+    @user.reset_sent_at = Time.zone.now - 3.hours
+    assert @user.password_reset_expired?
+  end
+
+  test 'updating membership changes subscription validity date' do
+    @user.update_membership true
+    assert @user.stripe_end_date = Date.today + 1.month
+    assert @user.has_valid_membership?
+  end
+
+  test 'invalid membership if never paid/used stripe' do
+    assert_not @user.has_valid_membership?
+  end
+
 end

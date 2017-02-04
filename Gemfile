@@ -43,6 +43,8 @@ group :development do
   gem 'spring-watcher-listen'
 end
 
+gem 'stripe-ruby-mock', '~> 2.4.0', :require => 'stripe_mock'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
