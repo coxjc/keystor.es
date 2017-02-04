@@ -58,3 +58,5 @@ gem 'aws-sdk', '~> 1'
 gem 'thor', '0.19.1'
 
 gem 'stripe'
+
+gem 'codecov', :require => false, :group => :test

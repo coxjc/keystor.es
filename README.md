@@ -2,7 +2,9 @@
 
 ## Build Status
 
-[![Build Status](https://travis-ci.com/coxjc/keystore.io.svg?token=1wy1Xm8AcSUXFqeb3yaP&branch=master)](https://travis-ci.com/coxjc/keystore.io)
+[![Build Status](https://travis-ci.com/coxjc/keystore.io
+.svg?token=1wy1Xm8AcSUXFqeb3yaP&branch=stripe)](https://travis-ci
+.com/coxjc/keystore.io)
 
 ## Installation
 

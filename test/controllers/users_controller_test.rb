@@ -70,10 +70,28 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
   end
 
-  test 'should update user' do
+  test 'should update user if logged in' do
+    @user.save
+    login(@user)
+    patch user_url(@user), params: {user: {name: 'Test'}}
+    assert_response :success
+    assert @user.name == 'Test'
+  end
+
+  test 'should not updated if user is not logged in' do
     @user.save
     patch user_url(@user), params: {user: {name: 'Test'}}
     assert_response :success
+    assert_not User.find(1).name == 'Test'
+  end
+
+  test 'should not allow a logged in user to update someone else' do
+    @user.save
+    login(@user)
+    patch user_url(User.find(1)), params: {user: {name: 'Test'}}
+    assert_not flash.empty?
+    assert_redirected_to root_url
+    assert_not User.find(1).name == 'Test'
   end
 
 end

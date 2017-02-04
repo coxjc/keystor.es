@@ -101,4 +101,10 @@ class UserTest < ActiveSupport::TestCase
     assert_not @user.has_valid_membership?
   end
 
+  test 'email is not confirmed until user uses the confirm token link' do
+    assert_not @user.email_confirmed
+    @user.email_activate
+    assert @user.email_confirmed
+  end
+
 end
