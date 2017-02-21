@@ -1,6 +1,6 @@
 <h1>Editing User</h1>
 
-<%= form_for :user, url: '/users' do |f| %>
+<%= form_for @user do |f| %>
 
     <div class="field form-group">
       Name: <%= f.text_field :name, class: 'form-control' %> <br>
