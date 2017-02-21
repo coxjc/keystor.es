@@ -1,3 +1,9 @@
+<% if current_user && current_user.stripe_end_date && current_user
+    .stripe_end_date >= Date.today %>
+    <h1>Your payment is up to date. You will be charged on <%= current_user
+                                                               .stripe_end_date %>
+    </h1>
+<% end %>
 <%= form_tag charges_path do %>
     <article>
       <% if flash[:error].present? %>
@@ -12,7 +18,5 @@
 
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-description="A month's subscription"
-            data-amount="199"
             data-locale="auto"></script>
 <% end %>

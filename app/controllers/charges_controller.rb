@@ -20,6 +20,22 @@ class ChargesController < ApplicationController
     redirect_to new_charge_path
   end
 
+  def edit
+    render 'edit'
+  end
+
+  def update
+    cus = Stripe::Customer.retrieve(current_user.stripe_cus_id)
+    card = cus.sources.create(card: params[:stripeToken])
+    card.save
+    cus.default_source = card.id
+    cus.save
+  rescue Stripe::InvalidRequestError => e
+    flash.now[:warning] = "#{e.message}"
+    redirect_to edit_charge_path
+    false
+  end
+
   def update_sub
     begin
       event_json = JSON.parse(request.body.read)
