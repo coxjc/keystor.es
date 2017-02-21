@@ -16,8 +16,9 @@ Rails.application.routes.draw do
   end
 
   resources :password_resets, only: [:new, :create, :edit, :update]
-  resources :charges
-
+  get '/charges/edit', to: 'charges#edit'
+  post '/charges/edit', to: 'charges#update'
   post 'charges/update_sub' => 'charges#update_sub'
+  resources :charges, except: [:edit, :update]
 
 end

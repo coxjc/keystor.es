@@ -30,6 +30,8 @@ class ChargesController < ApplicationController
     card.save
     cus.default_source = card.id
     cus.save
+    flash.now[:success] = 'Updated card successfully'
+    redirect_to current_user
   rescue Stripe::InvalidRequestError => e
     flash.now[:warning] = "#{e.message}"
     redirect_to edit_charge_path

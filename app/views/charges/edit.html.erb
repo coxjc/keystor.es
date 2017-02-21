@@ -4,7 +4,7 @@
                                                                .stripe_end_date %>
     </h1>
 <% end %>
-<%= form_tag charges_path do %>
+<%= form_tag '/charges/edit', :method => :post do %>
     <article>
       <% if flash[:error].present? %>
           <div id="error_explanation">
