@@ -1,18 +1,26 @@
-<%= form_tag charges_path do %>
-    <article>
-      <% if flash[:error].present? %>
-          <div id="error_explanation">
-            <p><%= flash[:error] %></p>
-          </div>
-      <% end %>
-      <label class="amount">
-        <span>Amount: $1.49/month</span>
-      </label>
-    </article>
+<div class="container">
+  <div class="jumbotron">
+    <h3>Launch a monthly subscription for $1.99/month, recurring. </h3>
+  </div>
+  <div style="text-align:center">
+    <%= form_tag charges_path do %>
+        <article>
+          <% if flash[:error].present? %>
+              <div id="error_explanation">
+                <p><%= flash[:error] %></p>
+              </div>
+          <% end %>
+          <label class="amount">
+            <span>Amount: $1.99/month</span>
+          </label>
+        </article>
 
-    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-description="A month's subscription"
-            data-amount="199"
-            data-locale="auto"></script>
-<% end %>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+                data-description="A month's subscription"
+                data-amount="199"
+                data-locale="auto"></script>
+
+        </div>
+    <% end %>
+    </div>

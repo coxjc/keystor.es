@@ -32,5 +32,10 @@ btn-primary', style: 'color:white' %>
 <br>
 <br>
 
-<%= link_to 'Payment Settings', new_charge_path, class: 'btn
+<% if current_user && current_user.stripe_cus_id.nil? %>
+    <%= link_to 'Payment Settings', new_charge_path, class: 'btn
 btn-primary', style: 'color:white' %>
+<% else %>
+    <%= link_to 'Payment Settings', '/charges/edit', class: 'btn
+btn-primary', style: 'color:white' %>
+<% end %>

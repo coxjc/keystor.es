@@ -4,7 +4,12 @@ class ChargesController < ApplicationController
   protect_from_forgery :except => [:update_sub]
 
   def new
-
+    if current_user && current_user.stripe_cus_id.nil? && current_user
+                                                              .stripe_end_date.nil?
+      render 'new'
+    else
+      render 'edit'
+    end
   end
 
   def create
