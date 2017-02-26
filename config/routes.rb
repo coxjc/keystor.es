@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :keystores
+  resources :keystores, except: [:edit, :update]
   resources :users do
     member do
       get :confirm_email
@@ -16,5 +16,9 @@ Rails.application.routes.draw do
   end
 
   resources :password_resets, only: [:new, :create, :edit, :update]
+  get '/charges/edit', to: 'charges#edit'
+  post '/charges/edit', to: 'charges#update'
+  post 'charges/update_sub' => 'charges#update_sub'
+  resources :charges, except: [:edit, :update]
 
 end

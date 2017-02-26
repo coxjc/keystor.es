@@ -3,6 +3,7 @@ class KeystoresController < ApplicationController
 
   before_action :set_keystore, only: [:show, :destroy]
   before_action :validate_is_confirmed, only: [:new, :create]
+  before_action :validate_membership, only: [:new, :create]
 
   # GET /keystores
   # GET /keystores.json
@@ -66,7 +67,16 @@ class KeystoresController < ApplicationController
     if !current_user.email_confirmed?
       flash[:danger] = 'You must confirm your email before uploading
       keystores.'
-      redirect_to keystores_path
+      redirect_to root_url
+    end
+  end
+
+
+  def validate_membership
+    if !current_user.has_valid_membership?
+      flash[:danger] = 'Your subscription is not valid! Please update your
+      payment to continue.'
+      redirect_to root_url
     end
   end
 
@@ -88,12 +98,11 @@ class KeystoresController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_keystore
-    if Keystore.find_by(:id => params[:id]) && Keystore.find_by(:id =>
-                                                                    params[:id]).user_id == current_user.id
+    if current_user && Keystore.find_by(:id => params[:id]) && Keystore.find_by(:id => params[:id]).user_id == current_user.id
       @keystore = Keystore.find(params[:id])
     else
       flash.now[:danger] = 'Not authorized'
-      redirect_to keystores_path
+      redirect_to root_url
     end
   end
 

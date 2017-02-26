@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update]
+  before_action :authenticate_user, only: [:show, :edit, :update]
 
   # GET /users
   # GET /users.json
   def index
     redirect_to root_url
-    # @users = User.all
   end
 
   # GET /users/1
@@ -56,16 +56,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
   def confirm_email
     user = User.find_by_confirm_token(params[:id])
     if user
@@ -85,6 +75,14 @@ class UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def authenticate_user
+    @user = User.find(params[:id])
+    if !(@user && logged_in? && current_user.id == @user.id)
+      flash.now[:error] = 'Not authorized.'
+      redirect_to root_url
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

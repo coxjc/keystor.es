@@ -6,10 +6,14 @@ class User < ApplicationRecord
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
 
-  validates :email, :uniqueness => {case_sensitive: false}
-  validates :name, :email, :password, :password_confirmation, :presence => true
-  validates :email, format: {with: VALID_EMAIL_REGEX}
-  validates :password, :length => {minimum: 6}
+  validates :email, :uniqueness => {case_sensitive: false},
+            format: {with: VALID_EMAIL_REGEX}
+  validates :name, :presence => true
+  validates :email, :presence => true,
+            if: lambda { new_record? || !password.blank? }
+  validates :password, :length => {minimum: 8}
+  validates :password, :presence => true,
+            if: lambda { new_record? || !password.blank? }
 
   before_save :save_uppercase
   before_create :confirmation_token
@@ -37,6 +41,16 @@ class User < ApplicationRecord
     UserMailer.password_reset(self).deliver
   end
 
+  def update_membership(tf)
+    if tf
+      self.stripe_end_date = Date.today + 1.month
+      save!(:validate => false)
+    end
+  end
+
+  def has_valid_membership?
+    stripe_end_date && Date.today <= stripe_end_date
+  end
 
   has_secure_password
 
