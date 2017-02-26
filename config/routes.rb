@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
+  get '/.well-known/acme-challenge/:id' => 'pages#letsencrypt'
+
   resources :keystores, except: [:edit, :update]
   resources :users do
     member do
