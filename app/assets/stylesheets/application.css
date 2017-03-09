@@ -18,15 +18,16 @@
     /*height: 1500px;*/
     /*width: 2100px;*/
     padding: 0px 0 100px 0;
-    margin: 30px;
+    /*margin: 30px;*/
 }
 
-div.home-pic.col-md-5 {
-    padding: 20px;
-    border: 2px dotted #ccc;
+div.home-pic.col-md-6 {
+    padding: 10px;
+    border: 2px double purple;
     background-color: #eeeeee;
     /*width:  1280px;*/
     /*height: 853px;*/
+    color: black;
     top: 0;
     left: 0
 }
