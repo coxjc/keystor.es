@@ -2,9 +2,7 @@
 
 ## Build Status
 
-[![Build Status](https://travis-ci.com/coxjc/keystore.io
-.svg?token=1wy1Xm8AcSUXFqeb3yaP&branch=master)](https://travis-ci
-.com/coxjc/keystor.es)
+[![Build Status](https://travis-ci.com/coxjc/keystore.io.svg?token=1wy1Xm8AcSUXFqeb3yaP&branch=master)](https://travis-ci.com/coxjc/keystore.io)
 
 ## What is Keystor.es?
 Keystor.es is a basic RoR service that enables customers to safely and securely store their keystore files (typically Android dev) in the cloud.
